@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Dashboard Container Styling */
+        .dashboard-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .stats .stat-card {
+            background-color: #f0f8ff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            width: 22%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats .stat-card h2 {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .stats .stat-card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Button Styling */
+        .dashboard-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .dashboard-buttons a {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 15px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .dashboard-buttons a:hover {
+            background-color: #0056b3;
+        }
+
+        .dashboard-buttons .logout {
+            background-color: #dc3545;
+        }
+
+        .dashboard-buttons .logout:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>Welcome to Your Dashboard</h1>
+                <p>View your quiz performance and start new challenges!</p>
+            </div>
+            {% if user_performance %}
+                <div class="stats">
+                    <div class="stat-card">
+                        <h2>Total Questions</h2>
+                        <p>{{ user_performance.total_attempted }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h2>Correct Answers</h2>
+                        <p>{{ user_performance.correct_answers }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h2>Score</h2>
+                        <p>{{ user_performance.score }}%</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert">
+                    <p>No quiz attempts yet. Start taking quizzes to track your performance.</p>
+                </div>
+            {% endif %}
+            <div class="dashboard-buttons">
+                <a href="{% url 'take_quiz' %}">Start Quiz</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="logout">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

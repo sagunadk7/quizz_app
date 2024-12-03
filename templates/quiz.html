@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .quiz-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .choices {
+            margin-bottom: 30px;
+        }
+        .choices li {
+            margin: 10px 0;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .alert {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quiz-container">
+            <h1>Quiz</h1>
+            <div class="question">
+                <p>{{ question.question_text }}</p>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="choices">
+                    <ul>
+                        {% for choice in question.choices %}
+                        <li>
+                            <label>
+                                <input type="radio" name="answer" value="{{ choice }}" required> {{ choice }}
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <button type="submit" class="btn">Submit Answer</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
